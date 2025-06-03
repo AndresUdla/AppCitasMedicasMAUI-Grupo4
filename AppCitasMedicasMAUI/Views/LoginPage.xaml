@@ -2,38 +2,65 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppCitasMedicasMAUI.Views.LoginPage"
-             BackgroundColor="White"
+             BackgroundColor="#f0f4f8"
              Title="Iniciar Sesión">
 
     <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="CenterAndExpand">
 
-            <Image Source="dotnet_bot.png" HeightRequest="150" Aspect="AspectFit" HorizontalOptions="Center" />
 
-            <Label Text="Bienvenido" FontSize="28" HorizontalOptions="Center" />
-            <Label Text="Por favor, inicia sesión para continuar" FontSize="16" HorizontalOptions="Center" />
+            <Image Source="sistema_medico.jpg"
+                   HeightRequest="180"
+                   Aspect="AspectFill"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,10"
+                   />
+
+            <Label Text="Bienvenido"
+                   FontSize="30"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#2C3E50" />
+
+            <Label Text="Por favor, inicia sesión para continuar"
+                   FontSize="16"
+                   HorizontalOptions="Center"
+                   TextColor="#34495E" />
 
             <Entry x:Name="CorreoEntry"
                    Placeholder="Correo electrónico"
                    Keyboard="Email"
                    TextColor="Black"
-                   PlaceholderColor="Gray"
-                   ClearButtonVisibility="WhileEditing" />
+                   PlaceholderColor="#7f8c8d"
+                   ClearButtonVisibility="WhileEditing"
+                   BackgroundColor="White"
+                   Margin="0"
+                   HeightRequest="45"
+                   />
+
 
             <Entry x:Name="ContrasenaEntry"
                    Placeholder="Contraseña"
                    IsPassword="True"
                    TextColor="Black"
-                   PlaceholderColor="Gray"
-                   ClearButtonVisibility="WhileEditing" />
+                   PlaceholderColor="#7f8c8d"
+                   ClearButtonVisibility="WhileEditing"
+                   BackgroundColor="White"
+                   Margin="0"
+                   HeightRequest="45"
+                   />
+
 
             <Button x:Name="LogginButton"
                     Text="Iniciar Sesión"
                     Clicked="LogginButton_Clicked"
                     BackgroundColor="#2C7EF0"
                     TextColor="White"
-                    CornerRadius="8"
-                    HeightRequest="45" />
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    Margin="0,10,0,0" />
+
 
             <Label x:Name="MensajeError"
                    TextColor="Red"
