@@ -13,7 +13,8 @@ namespace AppCitasMedicasMAUI.Service
         private readonly HttpClient _httpClient;
 
         public UsuarioService()
-        {
+        
+{
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("https://TU-URL-DE-LA-API/api/");
         }

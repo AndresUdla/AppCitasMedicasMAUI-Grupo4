@@ -1,11 +1,17 @@
+using AppCitasMedicasMAUI.Models;
+
 namespace AppCitasMedicasMAUI.Views;
 
 public partial class AdminDashboardPage : ContentPage
 {
-	public AdminDashboardPage()
-	{
-		InitializeComponent();
-	}
+    private readonly Usuario _usuario;
+
+    public AdminDashboardPage(Usuario usuario)
+    {
+        InitializeComponent();
+        _usuario = usuario;
+
+    }
 
     private async void OnUsuariosClicked(object sender, EventArgs e)
     {
@@ -26,6 +32,4 @@ public partial class AdminDashboardPage : ContentPage
     {
         await Navigation.PushAsync(new CitasPage());
     }
-
-
 }
