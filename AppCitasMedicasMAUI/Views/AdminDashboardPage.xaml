@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppCitasMedicasMAUI.Views.AdminDashboardPage"
+             Title="AdminDashboardPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <Label Text="Bienvenido, Administrador"
+                   FontSize="24"
+                   HorizontalOptions="Center" />
+
+            <Button Text="🧑‍💻 Usuarios"
+                    Clicked="OnUsuariosClicked"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    CornerRadius="10" />
+
+            <Button Text="🩺 Médicos"
+                    Clicked="OnMedicosClicked"
+                    BackgroundColor="#2196F3"
+                    TextColor="White"
+                    CornerRadius="10" />
+
+            <Button Text="🧑‍🦽 Pacientes"
+                    Clicked="OnPacientesClicked"
+                    BackgroundColor="#9C27B0"
+                    TextColor="White"
+                    CornerRadius="10" />
+
+            <Button Text="📋 Citas"
+                    Clicked="OnCitasClicked"
+                    BackgroundColor="#FF9800"
+                    TextColor="White"
+                    CornerRadius="10" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
