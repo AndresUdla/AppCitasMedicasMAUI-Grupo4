@@ -30,7 +30,7 @@ namespace AppCitasMedicasMAUI.Service
             var json = JsonSerializer.Serialize(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("usuario/login", content);
+            var response = await _httpClient.PostAsync("api/usuario/login", content);
 
             if (response.IsSuccessStatusCode)
             {
