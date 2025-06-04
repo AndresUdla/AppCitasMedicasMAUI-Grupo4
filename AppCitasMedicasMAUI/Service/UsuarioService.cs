@@ -16,7 +16,7 @@ namespace AppCitasMedicasMAUI.Service
         
 {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://TU-URL-DE-LA-API/api/");
+            _httpClient.BaseAddress = new Uri("https://localhost:7062");
         }
 
         public async Task<Usuario> LoginAsync(string correo, string contrasena)
