@@ -1,12 +1,7 @@
 ﻿using AppCitasMedicasMAUI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AppCitasMedicasMAUI.Service 
+namespace AppCitasMedicasMAUI.Services
 {
     public class PacienteService
     {
@@ -15,32 +10,40 @@ namespace AppCitasMedicasMAUI.Service
         public PacienteService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            // No necesitamos _httpClient.BaseAddress aquí porque ya lo configuraste en MauiProgram.cs
         }
 
-        public async Task<List<Paciente>> ObtenerPacientesAsync()
+        public async Task<List<Paciente>> GetPacientesAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<Paciente>>("api/Paciente");
+            try
+            {
+                var pacientes = await _httpClient.GetFromJsonAsync<List<Paciente>>("api/Paciente");
+                Console.WriteLine($"Pacientes recibidos: {pacientes?.Count}");
+                return pacientes ?? new List<Paciente>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener pacientes: {ex.Message}");
+                return new List<Paciente>();
+            }
         }
 
-        public async Task<Paciente> ObtenerPacientePorIdAsync(int id)
-        {
-            return await _httpClient.GetFromJsonAsync<Paciente>($"api/Paciente/{id}");
-        }
+        // El resto permanece igual, pero sin repetir baseUrl
+        public async Task<Paciente?> GetPacienteByIdAsync(int id) =>
+            await _httpClient.GetFromJsonAsync<Paciente>($"api/Paciente/{id}");
 
-        public async Task<bool> CrearPacienteAsync(Paciente paciente)
+        public async Task<bool> CreatePacienteAsync(Paciente paciente)
         {
             var response = await _httpClient.PostAsJsonAsync("api/Paciente", paciente);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> ActualizarPacienteAsync(int id, Paciente paciente)
+        public async Task<bool> UpdatePacienteAsync(int id, Paciente paciente)
         {
             var response = await _httpClient.PutAsJsonAsync($"api/Paciente/{id}", paciente);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> EliminarPacienteAsync(int id)
+        public async Task<bool> DeletePacienteAsync(int id)
         {
             var response = await _httpClient.DeleteAsync($"api/Paciente/{id}");
             return response.IsSuccessStatusCode;

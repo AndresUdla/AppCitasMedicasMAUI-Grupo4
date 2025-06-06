@@ -2,11 +2,50 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppCitasMedicasMAUI.Views.PacientesPage"
-             Title="PacientesPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Pacientes">
+    <ContentPage.Content>
+        <VerticalStackLayout Padding="10" Spacing="10">
+
+            <Button 
+                Text="➕ Crear nuevo paciente"
+                Clicked="OnCrearPacienteClicked"
+                BackgroundColor="#4CAF50"
+                TextColor="White" />
+
+            <CollectionView x:Name="PacientesCollectionView" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="{Binding Nombres}" FontAttributes="Bold" FontSize="16"/>
+                                <Label Text="{Binding Apellidos}" FontSize="14"/>
+                                <Label Text="{Binding Cedula}" FontSize="14"/>
+                                <Label Text="{Binding Edad, StringFormat='Edad: {0}'}" FontSize="14"/>
+                                <Label Text="{Binding Altura, StringFormat='Altura: {0}'}" FontSize="14"/>
+                                <Label Text="{Binding Peso, StringFormat='Peso: {0}'}" FontSize="14"/>
+                                <Label Text="{Binding Direccion, StringFormat='Dirección: {0}'}" FontSize="14"/>
+                                <Label Text="{Binding Telefono, StringFormat='Teléfono: {0}'}" FontSize="14"/>
+
+                                <HorizontalStackLayout Spacing="10">
+                                    <Button 
+                                        Text="✏️ Editar"
+                                        BackgroundColor="#2196F3"
+                                        TextColor="White"
+                                        Clicked="OnEditarPacienteClicked"
+                                        CommandParameter="{Binding}" />
+
+                                    <Button 
+                                        Text="🗑️ Eliminar"
+                                        BackgroundColor="#F44336"
+                                        TextColor="White"
+                                        Clicked="OnEliminarPacienteClicked"
+                                        CommandParameter="{Binding}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ContentPage.Content>
 </ContentPage>

@@ -1,5 +1,7 @@
 ﻿using AppCitasMedicasMAUI.Service;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using AppCitasMedicasMAUI.Services;
 
 namespace AppCitasMedicasMAUI
 {
@@ -21,15 +23,14 @@ namespace AppCitasMedicasMAUI
             builder.Logging.AddDebug();
 #endif
 
-            
-            builder.Services.AddHttpClient("Api", client =>
+            // Usa el HttpClient directamente en el servicio
+            builder.Services.AddHttpClient<PacienteService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:7062/"); 
+                client.BaseAddress = new Uri("http://10.0.2.2:7062/"); // ← IMPORTANTE para Android
             });
-
-            builder.Services.AddSingleton<PacienteService>();
 
             return builder.Build();
         }
     }
+
 }

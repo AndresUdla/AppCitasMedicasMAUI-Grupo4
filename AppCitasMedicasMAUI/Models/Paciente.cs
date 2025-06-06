@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppCitasMedicasMAUI.Models
 {
-    internal class Paciente
+    public class Paciente
     {
         public int PacienteId { get; set; }
         public string Nombres { get; set; }
