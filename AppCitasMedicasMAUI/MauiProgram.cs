@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AppCitasMedicasMAUI.Service;
+using Microsoft.Extensions.Logging;
 
 namespace AppCitasMedicasMAUI
 {
@@ -7,6 +8,7 @@ namespace AppCitasMedicasMAUI
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -16,8 +18,16 @@ namespace AppCitasMedicasMAUI
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
+
+            
+            builder.Services.AddHttpClient("Api", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7062/"); 
+            });
+
+            builder.Services.AddSingleton<PacienteService>();
 
             return builder.Build();
         }
