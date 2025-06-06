@@ -15,15 +15,16 @@ namespace AppCitasMedicasMAUI.Views
         public PacientesPage()
         {
             InitializeComponent();
-
-
             _pacienteService = App.Current.Handler.MauiContext.Services.GetService<PacienteService>();
-
- 
-            CargarPacientes();
         }
 
-        private async void CargarPacientes()
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await CargarPacientes();
+        }
+
+        private async Task CargarPacientes()
         {
             try
             {
@@ -66,7 +67,7 @@ namespace AppCitasMedicasMAUI.Views
                     if (exito)
                     {
                         await DisplayAlert("Éxito", "Paciente eliminado correctamente.", "OK");
-                        CargarPacientes(); 
+                        await CargarPacientes();
                     }
                     else
                     {
@@ -76,4 +77,5 @@ namespace AppCitasMedicasMAUI.Views
             }
         }
     }
+
 }

@@ -1,12 +1,41 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppCitasMedicasMAUI.Views.CrearPacientePage"
-             Title="CrearPacientePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Crear Paciente">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="Seleccionar Usuario Paciente:" />
+            <Picker x:Name="UsuarioPicker" />
+
+            <Label Text="Nombres:" />
+            <Entry x:Name="NombresEntry" />
+
+            <Label Text="Apellidos:" />
+            <Entry x:Name="ApellidosEntry" />
+
+            <Label Text="Cédula:" />
+            <Entry x:Name="CedulaEntry" />
+
+            <Label Text="Edad:" />
+            <Entry x:Name="EdadEntry" Keyboard="Numeric" />
+
+            <Label Text="Altura (cm):" />
+            <Entry x:Name="AlturaEntry" Keyboard="Numeric" />
+
+            <Label Text="Peso (kg):" />
+            <Entry x:Name="PesoEntry" Keyboard="Numeric" />
+
+            <Label Text="Dirección:" />
+            <Entry x:Name="DireccionEntry" />
+
+            <Label Text="Teléfono:" />
+            <Entry x:Name="TelefonoEntry" />
+
+            <Button Text="Crear Paciente" Clicked="OnCrearClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

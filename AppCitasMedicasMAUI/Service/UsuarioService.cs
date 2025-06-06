@@ -12,12 +12,13 @@ namespace AppCitasMedicasMAUI.Service
     {
         private readonly HttpClient _httpClient;
 
-        public UsuarioService()
-        
-{
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://localhost:7062");
+        public UsuarioService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
         }
+
+
+
 
         public async Task<Usuario> LoginAsync(string correo, string contrasena)
         {
@@ -45,5 +46,30 @@ namespace AppCitasMedicasMAUI.Service
 
             return null;
         }
+
+        public async Task<List<Usuario>> GetUsuariosAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("api/usuario");
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var usuarios = JsonSerializer.Deserialize<List<Usuario>>(json, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                    return usuarios ?? new List<Usuario>();
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+
+            return new List<Usuario>();
+        }
+
     }
 }
