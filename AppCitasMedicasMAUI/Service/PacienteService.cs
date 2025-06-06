@@ -27,7 +27,6 @@ namespace AppCitasMedicasMAUI.Services
             }
         }
 
-        // El resto permanece igual, pero sin repetir baseUrl
         public async Task<Paciente?> GetPacienteByIdAsync(int id) =>
             await _httpClient.GetFromJsonAsync<Paciente>($"api/Paciente/{id}");
 

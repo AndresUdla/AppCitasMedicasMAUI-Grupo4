@@ -16,10 +16,10 @@ namespace AppCitasMedicasMAUI.Views
         {
             InitializeComponent();
 
-            // Obtener el servicio desde el contenedor
+
             _pacienteService = App.Current.Handler.MauiContext.Services.GetService<PacienteService>();
 
-            // Cargar los pacientes al inicio
+ 
             CargarPacientes();
         }
 
@@ -38,7 +38,6 @@ namespace AppCitasMedicasMAUI.Views
 
         private async void OnCrearPacienteClicked(object sender, EventArgs e)
         {
-            // Navega a una página para crear un nuevo paciente
             await Navigation.PushAsync(new CrearPacientePage());
         }
 
@@ -67,7 +66,7 @@ namespace AppCitasMedicasMAUI.Views
                     if (exito)
                     {
                         await DisplayAlert("Éxito", "Paciente eliminado correctamente.", "OK");
-                        CargarPacientes(); // Refrescar la lista
+                        CargarPacientes(); 
                     }
                     else
                     {

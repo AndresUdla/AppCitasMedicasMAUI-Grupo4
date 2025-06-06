@@ -37,7 +37,7 @@ namespace AppCitasMedicasMAUI.Views
                 {
                     if (usuario.Rol == RolUsuario.Administrador)
                     {
-                        // Navega al dashboard de administrador
+   
                         await Navigation.PushAsync(new AdminDashboardPage(usuario));
                     }
                     else
@@ -56,7 +56,6 @@ namespace AppCitasMedicasMAUI.Views
             {
                 MensajeError.Text = "Error al conectar con el servidor.";
                 MensajeError.IsVisible = true;
-                // Puedes mostrar el error técnico en consola si estás depurando
                 Console.WriteLine($"Error de login: {ex.Message}");
             }
         }

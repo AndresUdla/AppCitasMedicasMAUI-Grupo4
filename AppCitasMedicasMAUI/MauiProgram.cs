@@ -23,10 +23,9 @@ namespace AppCitasMedicasMAUI
             builder.Logging.AddDebug();
 #endif
 
-            // Usa el HttpClient directamente en el servicio
             builder.Services.AddHttpClient<PacienteService>(client =>
             {
-                client.BaseAddress = new Uri("http://10.0.2.2:7062/"); // ← IMPORTANTE para Android
+                client.BaseAddress = new Uri("https://localhost:7062/"); 
             });
 
             return builder.Build();
