@@ -38,8 +38,8 @@ namespace AppCitasMedicasMAUI.Views
                 {
                     if (usuario.Rol == RolUsuario.Administrador)
                     {
-   
-                        await Navigation.PushAsync(new AdminDashboardPage(usuario));
+
+                        await Shell.Current.GoToAsync("//AdminTabs");
                     }
                     else
                     {

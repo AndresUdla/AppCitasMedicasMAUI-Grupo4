@@ -7,9 +7,33 @@
     Shell.FlyoutBehavior="Disabled"
     Title="AppCitasMedicasMAUI">
 
+    <!-- Página inicial (Login) -->
     <ShellContent
-        Title="Home"
+        Title="Login"
         ContentTemplate="{DataTemplate views:LoginPage}"
         Route="LoginPage" />
+
+    <!-- Navegación por pestañas -->
+    <TabBar Route="AdminTabs">
+        <ShellContent
+            Title="🧑‍💻 Usuarios"
+            ContentTemplate="{DataTemplate views:UsuariosPage}"
+            Route="UsuariosPage" />
+
+        <ShellContent
+            Title="🩺 Médicos"
+            ContentTemplate="{DataTemplate views:MedicosPage}"
+            Route="MedicosPage" />
+
+        <ShellContent
+            Title="🧑‍🦽 Pacientes"
+            ContentTemplate="{DataTemplate views:PacientesPage}"
+            Route="PacientesPage" />
+
+        <ShellContent
+            Title="📋 Citas"
+            ContentTemplate="{DataTemplate views:CitasPage}"
+            Route="CitasPage" />
+    </TabBar>
 
 </Shell>
