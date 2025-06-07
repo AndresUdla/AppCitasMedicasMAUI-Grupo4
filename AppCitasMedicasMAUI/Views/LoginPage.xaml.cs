@@ -12,7 +12,7 @@ namespace AppCitasMedicasMAUI.Views
         public LoginPage()
         {
             InitializeComponent();
-            _usuarioService = new UsuarioService(new HttpClient { BaseAddress = new Uri("https://localhost:7062/") });
+            _usuarioService = new UsuarioService(new HttpClient { BaseAddress = new Uri(ApiConstants.BaseUrl) });
         }
 
 

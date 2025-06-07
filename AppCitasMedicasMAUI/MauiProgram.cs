@@ -1,7 +1,8 @@
 ﻿using AppCitasMedicasMAUI.Service;
+using AppCitasMedicasMAUI.Services;
+using AppCitasMedicasMAUI.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using AppCitasMedicasMAUI.Services;
 
 namespace AppCitasMedicasMAUI
 {
@@ -25,11 +26,11 @@ namespace AppCitasMedicasMAUI
 
             builder.Services.AddHttpClient<PacienteService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:7062/"); 
+                client.BaseAddress = new Uri(ApiConstants.BaseUrl);
             });
 
             return builder.Build();
         }
     }
-
 }
+

@@ -14,7 +14,7 @@ public partial class EditarPacientePage : ContentPage
         _pacienteService = App.Current.Handler.MauiContext.Services.GetService<PacienteService>();
         _paciente = paciente;
 
-        // Cargar datos en los campos
+
         NombresEntry.Text = _paciente.Nombres;
         ApellidosEntry.Text = _paciente.Apellidos;
         CedulaEntry.Text = _paciente.Cedula;
@@ -27,7 +27,7 @@ public partial class EditarPacientePage : ContentPage
 
     private async void OnGuardarClicked(object sender, EventArgs e)
     {
-        // Actualizar objeto
+
         _paciente.Nombres = NombresEntry.Text;
         _paciente.Apellidos = ApellidosEntry.Text;
         _paciente.Cedula = CedulaEntry.Text;

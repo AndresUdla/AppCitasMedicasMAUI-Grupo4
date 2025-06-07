@@ -15,8 +15,8 @@ namespace AppCitasMedicasMAUI.Views
         public CrearPacientePage()
         {
             InitializeComponent();
-            _usuarioService = new UsuarioService(new HttpClient { BaseAddress = new Uri("https://localhost:7062/") });
-            _pacienteService = new PacienteService(new HttpClient { BaseAddress = new Uri("https://localhost:7062/") });
+            _usuarioService = new UsuarioService(new HttpClient { BaseAddress = new Uri(ApiConstants.BaseUrl) });
+            _pacienteService = new PacienteService(new HttpClient { BaseAddress = new Uri(ApiConstants.BaseUrl) });
             CargarUsuariosPaciente();
         }
 
@@ -65,7 +65,7 @@ namespace AppCitasMedicasMAUI.Views
             if (resultado)
             {
                 await DisplayAlert("Éxito", "Paciente creado correctamente.", "OK");
-                await Navigation.PopAsync(); // Regresa a la página anterior (PacientesPage)
+                await Navigation.PopAsync(); 
             }
             else
             {
