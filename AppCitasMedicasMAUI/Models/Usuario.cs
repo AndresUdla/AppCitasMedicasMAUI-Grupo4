@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SQLite;
 
 namespace AppCitasMedicasMAUI.Models
 {
@@ -13,11 +9,19 @@ namespace AppCitasMedicasMAUI.Models
         Paciente
     }
 
+    [Table("Usuarios")]
     public class Usuario
     {
+        [PrimaryKey, AutoIncrement]
         public int UsuarioId { get; set; }
+
+        [MaxLength(100), NotNull]
         public string Correo { get; set; }
+
+        [MaxLength(100), NotNull]
         public string Contrasena { get; set; }
+
+        [NotNull]
         public RolUsuario Rol { get; set; }
     }
 }
