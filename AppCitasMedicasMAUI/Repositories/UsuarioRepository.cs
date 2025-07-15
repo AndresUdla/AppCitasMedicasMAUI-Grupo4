@@ -1,52 +1,48 @@
 ﻿using AppCitasMedicasMAUI.Models;
 using SQLite;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AppCitasMedicasMAUI.Repositories
 {
     public class UsuarioRepository
     {
-        private readonly SQLiteAsyncConnection _database;
+        private readonly SQLiteAsyncConnection _db;
 
-        public UsuarioRepository(SQLiteAsyncConnection database)
+        public UsuarioRepository(SQLiteAsyncConnection db)
         {
-            _database = database;
-            _database.CreateTableAsync<Usuario>().Wait();
+            _db = db;
+            _db.CreateTableAsync<Usuario>().Wait();
         }
 
-        public Task<List<Usuario>> ObtenerTodosAsync()
+        public Task<List<Usuario>> GetAllAsync()
         {
-            return _database.Table<Usuario>().ToListAsync();
+            return _db.Table<Usuario>().ToListAsync();
         }
 
-        public Task<Usuario> ObtenerPorIdAsync(int id)
+        public Task<Usuario?> GetByIdAsync(int id)
         {
-            return _database.Table<Usuario>()
-                            .Where(u => u.UsuarioId == id)
-                            .FirstOrDefaultAsync();
+            return _db.Table<Usuario>().Where(u => u.UsuarioId == id).FirstOrDefaultAsync();
         }
 
-        public Task<Usuario> IniciarSesionAsync(string correo, string contrasena)
+        public Task<Usuario?> GetByCorreoYContrasenaAsync(string correo, string contrasena)
         {
-            return _database.Table<Usuario>()
-                            .Where(u => u.Correo == correo && u.Contrasena == contrasena)
-                            .FirstOrDefaultAsync();
+            return _db.Table<Usuario>()
+                .Where(u => u.Correo == correo && u.Contrasena == contrasena)
+                .FirstOrDefaultAsync();
         }
 
-        public Task<int> InsertarAsync(Usuario usuario)
+        public Task<int> InsertAsync(Usuario usuario)
         {
-            return _database.InsertAsync(usuario);
+            return _db.InsertAsync(usuario);
         }
 
-        public Task<int> ActualizarAsync(Usuario usuario)
+        public Task<int> UpdateAsync(Usuario usuario)
         {
-            return _database.UpdateAsync(usuario);
+            return _db.UpdateAsync(usuario);
         }
 
-        public Task<int> EliminarAsync(Usuario usuario)
+        public Task<int> DeleteAsync(Usuario usuario)
         {
-            return _database.DeleteAsync(usuario);
+            return _db.DeleteAsync(usuario);
         }
     }
 }
