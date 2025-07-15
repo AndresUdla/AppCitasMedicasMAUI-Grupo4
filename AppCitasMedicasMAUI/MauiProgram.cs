@@ -24,13 +24,21 @@ namespace AppCitasMedicasMAUI
             builder.Logging.AddDebug();
 #endif
 
-            builder.Services.AddHttpClient<PacienteService>(client =>
+            
+            builder.Services.AddHttpClient<UsuarioService>(client =>
             {
                 client.BaseAddress = new Uri(ApiConstants.BaseUrl);
             });
 
+            
+            builder.Services.AddSingleton<UsuarioService>();
+
+            
+            builder.Services.AddSingleton<Services.DatabaseService>();
+
             return builder.Build();
         }
+
     }
 }
 

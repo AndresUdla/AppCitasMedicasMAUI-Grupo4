@@ -1,75 +1,42 @@
 ﻿using AppCitasMedicasMAUI.Models;
-using System;
+using AppCitasMedicasMAUI.Repositories;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace AppCitasMedicasMAUI.Service
+namespace AppCitasMedicasMAUI.Services
 {
     public class UsuarioService
     {
-        private readonly HttpClient _httpClient;
+        private readonly UsuarioRepository _usuarioRepository;
 
-        public UsuarioService(HttpClient httpClient)
+        public UsuarioService()
         {
-            _httpClient = httpClient;
+            _usuarioRepository = DatabaseService.UsuarioRepo;
         }
 
-
-
-
-        public async Task<Usuario> LoginAsync(string correo, string contrasena)
+        public Task<Usuario> LoginAsync(string correo, string contrasena)
         {
-            var request = new
-            {
-                Correo = correo,
-                Contrasena = contrasena
-            };
-
-            var json = JsonSerializer.Serialize(request);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/usuario/login", content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                var usuario = JsonSerializer.Deserialize<Usuario>(responseContent, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-
-                return usuario;
-            }
-
-            return null;
+            return _usuarioRepository.IniciarSesionAsync(correo, contrasena);
         }
 
-        public async Task<List<Usuario>> GetUsuariosAsync()
+        public Task<List<Usuario>> ObtenerUsuariosAsync()
         {
-            try
-            {
-                var response = await _httpClient.GetAsync("api/usuario");
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    var usuarios = JsonSerializer.Deserialize<List<Usuario>>(json, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-
-                    return usuarios ?? new List<Usuario>();
-                }
-            }
-            catch (Exception ex)
-            {
-                
-            }
-
-            return new List<Usuario>();
+            return _usuarioRepository.ObtenerTodosAsync();
         }
 
+        public Task<int> InsertarUsuarioAsync(Usuario usuario)
+        {
+            return _usuarioRepository.InsertarAsync(usuario);
+        }
+
+        public Task<int> ActualizarUsuarioAsync(Usuario usuario)
+        {
+            return _usuarioRepository.ActualizarAsync(usuario);
+        }
+
+        public Task<int> EliminarUsuarioAsync(Usuario usuario)
+        {
+            return _usuarioRepository.EliminarAsync(usuario);
+        }
     }
 }
