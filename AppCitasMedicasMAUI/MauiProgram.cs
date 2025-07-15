@@ -1,8 +1,5 @@
-﻿using AppCitasMedicasMAUI.Service;
-using AppCitasMedicasMAUI.Services;
-using AppCitasMedicasMAUI.Models;
+﻿using AppCitasMedicasMAUI.Data;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AppCitasMedicasMAUI
 {
@@ -24,21 +21,14 @@ namespace AppCitasMedicasMAUI
             builder.Logging.AddDebug();
 #endif
 
-            
-            builder.Services.AddHttpClient<UsuarioService>(client =>
+            // Registro de AppDatabase como singleton asincrónico
+            builder.Services.AddSingleton(async provider =>
             {
-                client.BaseAddress = new Uri(ApiConstants.BaseUrl);
+                var dbPath = Path.Combine(FileSystem.AppDataDirectory, "citasmedicas.db3");
+                return await AppDatabase.CreateAsync(dbPath);
             });
-
-            
-            builder.Services.AddSingleton<UsuarioService>();
-
-            
-            builder.Services.AddSingleton<Services.DatabaseService>();
 
             return builder.Build();
         }
-
     }
 }
-
