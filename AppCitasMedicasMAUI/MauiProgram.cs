@@ -1,5 +1,7 @@
 ﻿using AppCitasMedicasMAUI.Data;
+using AppCitasMedicasMAUI.Services;
 using Microsoft.Extensions.Logging;
+using System.Net.Http;
 
 namespace AppCitasMedicasMAUI
 {
@@ -27,6 +29,17 @@ namespace AppCitasMedicasMAUI
                 var dbPath = Path.Combine(FileSystem.AppDataDirectory, "citasmedicas.db3");
                 return await AppDatabase.CreateAsync(dbPath);
             });
+
+            // Registro del HttpClient para API
+            builder.Services.AddHttpClient();
+
+            // Registro de ApiServices como transient o singleton según prefieras
+            builder.Services.AddTransient<AdministradorApiService>();
+            builder.Services.AddTransient<UsuarioApiService>();
+            builder.Services.AddTransient<MedicoApiService>();
+            builder.Services.AddTransient<PacienteApiService>();
+            builder.Services.AddTransient<HorarioApiService>();
+            builder.Services.AddTransient<CitaApiService>();
 
             return builder.Build();
         }
