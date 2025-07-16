@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppCitasMedicasMAUI.Views.CrearPacientePage"
@@ -7,35 +8,43 @@
         <VerticalStackLayout Padding="20" Spacing="15">
 
             <Label Text="Seleccionar Usuario Paciente:" />
-            <Picker x:Name="UsuarioPicker" />
+            <Picker ItemsSource="{Binding UsuariosPaciente}"
+                    ItemDisplayBinding="{Binding Correo}"
+                    SelectedItem="{Binding UsuarioSeleccionado}" />
 
             <Label Text="Nombres:" />
-            <Entry x:Name="NombresEntry" />
+            <Entry Text="{Binding Nombres}" Placeholder="Ingrese nombres" />
 
             <Label Text="Apellidos:" />
-            <Entry x:Name="ApellidosEntry" />
+            <Entry Text="{Binding Apellidos}" Placeholder="Ingrese apellidos" />
 
             <Label Text="Cédula:" />
-            <Entry x:Name="CedulaEntry" />
+            <Entry Text="{Binding Cedula}" Placeholder="Ingrese cédula" />
 
             <Label Text="Edad:" />
-            <Entry x:Name="EdadEntry" Keyboard="Numeric" />
+            <Entry Text="{Binding Edad}" Keyboard="Numeric" Placeholder="Ingrese edad" />
 
             <Label Text="Altura (cm):" />
-            <Entry x:Name="AlturaEntry" Keyboard="Numeric" />
+            <Entry Text="{Binding Altura}" Keyboard="Numeric" Placeholder="Ingrese altura" />
 
             <Label Text="Peso (kg):" />
-            <Entry x:Name="PesoEntry" Keyboard="Numeric" />
+            <Entry Text="{Binding Peso}" Keyboard="Numeric" Placeholder="Ingrese peso" />
 
             <Label Text="Dirección:" />
-            <Entry x:Name="DireccionEntry" />
+            <Entry Text="{Binding Direccion}" Placeholder="Ingrese dirección" />
 
             <Label Text="Teléfono:" />
-            <Entry x:Name="TelefonoEntry" />
+            <Entry Text="{Binding Telefono}" Placeholder="Ingrese teléfono" />
 
-            <Button Text="Crear Paciente" Clicked="OnCrearClicked" />
+            <Button Text="Crear Paciente"
+                    Command="{Binding CrearCommand}"
+                    BackgroundColor="#2C7EF0"
+                    TextColor="White" />
+            <Button Text="Cancelar"
+                Command="{Binding CancelarCommand}"
+                BackgroundColor="#B0BEC5"
+                TextColor="Black" />
 
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

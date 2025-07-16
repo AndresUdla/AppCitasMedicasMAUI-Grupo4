@@ -1,114 +1,86 @@
 ﻿using AppCitasMedicasMAUI.Models;
 using AppCitasMedicasMAUI.Services;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
+using System.Diagnostics;
 
 namespace AppCitasMedicasMAUI.ViewModels
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : BaseViewModel
     {
-        private string correo;
-        private string contrasena;
-        private string mensajeError;
-        private bool isErrorVisible;
+        private readonly UsuarioApiService _usuarioApiService;
 
-        private readonly UsuarioService _usuarioService;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public LoginViewModel()
+        public LoginViewModel(UsuarioApiService usuarioApiService)
         {
-            _usuarioService = new UsuarioService();
-            LoginCommand = new Command(async () => await LoginAsync());
+            _usuarioApiService = usuarioApiService;
+            LoginCommand = new Command(async () => await LoginAsync(), () => !IsBusy);
         }
 
+        private string correo;
         public string Correo
         {
             get => correo;
-            set
-            {
-                correo = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref correo, value);
         }
 
+        private string contrasena;
         public string Contrasena
         {
             get => contrasena;
-            set
-            {
-                contrasena = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref contrasena, value);
         }
 
+        private string mensajeError;
         public string MensajeError
         {
             get => mensajeError;
             set
             {
-                mensajeError = value;
-                OnPropertyChanged();
+                SetProperty(ref mensajeError, value);
+                IsErrorVisible = !string.IsNullOrEmpty(value);
             }
         }
 
+        private bool isErrorVisible;
         public bool IsErrorVisible
         {
             get => isErrorVisible;
-            set
-            {
-                isErrorVisible = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref isErrorVisible, value);
         }
 
         public ICommand LoginCommand { get; }
 
         private async Task LoginAsync()
         {
-            IsErrorVisible = false;
+            if (IsBusy) return;
 
-            if (string.IsNullOrWhiteSpace(Correo) || string.IsNullOrWhiteSpace(Contrasena))
-            {
-                MensajeError = "Por favor, llena todos los campos.";
-                IsErrorVisible = true;
-                return;
-            }
+            IsBusy = true;
+            ((Command)LoginCommand).ChangeCanExecute();
+            MensajeError = string.Empty;
+
+            Debug.WriteLine($"Intentando login con {Correo}");
 
             try
             {
-                var usuario = await _usuarioService.LoginAsync(Correo.Trim(), Contrasena);
-
+                var usuario = await _usuarioApiService.LoginAsync(Correo, Contrasena);
                 if (usuario != null)
                 {
-                    if (usuario.Rol == RolUsuario.Administrador)
-                    {
-                        // Navegar a la vista AdminTabs usando Shell
-                        await Shell.Current.GoToAsync("//AdminTabs");
-                    }
-                    else
-                    {
-                        MensajeError = "Acceso denegado. Solo administradores pueden ingresar.";
-                        IsErrorVisible = true;
-                    }
+                    Debug.WriteLine($"Login exitoso para {usuario.Correo}, navegando...");
+                    await Shell.Current.GoToAsync("//AdminTabs");  
                 }
                 else
                 {
                     MensajeError = "Correo o contraseña incorrectos.";
-                    IsErrorVisible = true;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MensajeError = "Error al conectar con el servidor.";
-                IsErrorVisible = true;
+                MensajeError = $"Error al iniciar sesión: {ex.Message}";
+            }
+            finally
+            {
+                IsBusy = false;
+                ((Command)LoginCommand).ChangeCanExecute();
             }
         }
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

@@ -2,53 +2,54 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppCitasMedicasMAUI.Views.PacientesPage"
+             x:Name="PageRoot"
              Title="Pacientes">
-    <ContentPage.Content>
-        <ScrollView>
-            <VerticalStackLayout Padding="10" Spacing="10">
 
-                <Button 
-                    Text="➕ Crear nuevo paciente"
-                    Clicked="OnCrearPacienteClicked"
-                    BackgroundColor="#4CAF50"
-                    TextColor="White" />
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="10">
 
-                <CollectionView x:Name="PacientesCollectionView" SelectionMode="None">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
-                                <VerticalStackLayout Spacing="5">
-                                    <Label Text="{Binding Nombres}" FontAttributes="Bold" FontSize="16"/>
-                                    <Label Text="{Binding Apellidos}" FontSize="14"/>
-                                    <Label Text="{Binding Cedula}" FontSize="14"/>
-                                    <Label Text="{Binding Edad, StringFormat='Edad: {0}'}" FontSize="14"/>
-                                    <Label Text="{Binding Altura, StringFormat='Altura: {0}'}" FontSize="14"/>
-                                    <Label Text="{Binding Peso, StringFormat='Peso: {0}'}" FontSize="14"/>
-                                    <Label Text="{Binding Direccion, StringFormat='Dirección: {0}'}" FontSize="14"/>
-                                    <Label Text="{Binding Telefono, StringFormat='Teléfono: {0}'}" FontSize="14"/>
+            <Button 
+                Text="➕ Crear nuevo paciente"
+                Command="{Binding CrearPacienteCommand}"
+                BackgroundColor="#4CAF50"
+                TextColor="White" />
 
-                                    <HorizontalStackLayout Spacing="10">
-                                        <Button 
-                                            Text="✏️ Editar"
-                                            BackgroundColor="#2196F3"
-                                            TextColor="White"
-                                            Clicked="OnEditarPacienteClicked"
-                                            CommandParameter="{Binding}" />
+            <CollectionView ItemsSource="{Binding Pacientes}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="{Binding Nombres}" FontAttributes="Bold" FontSize="16"/>
+                                <Label Text="{Binding Apellidos}" FontSize="14"/>
+                                <Label Text="{Binding Cedula}" FontSize="14"/>
+                                <Label Text="{Binding Edad, StringFormat='Edad: {0}'}" FontSize="14"/>
+                                <Label Text="{Binding Altura, StringFormat='Altura: {0}'}" FontSize="14"/>
+                                <Label Text="{Binding Peso, StringFormat='Peso: {0}'}" FontSize="14"/>
+                                <Label Text="{Binding Direccion, StringFormat='Dirección: {0}'}" FontSize="14"/>
+                                <Label Text="{Binding Telefono, StringFormat='Teléfono: {0}'}" FontSize="14"/>
 
-                                        <Button 
-                                            Text="🗑️ Eliminar"
-                                            BackgroundColor="#F44336"
-                                            TextColor="White"
-                                            Clicked="OnEliminarPacienteClicked"
-                                            CommandParameter="{Binding}" />
-                                    </HorizontalStackLayout>
-                                </VerticalStackLayout>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                                <HorizontalStackLayout Spacing="10">
+                                    <Button 
+                                        Text="✏️ Editar"
+                                        BackgroundColor="#2196F3"
+                                        TextColor="White"
+                                        Command="{Binding BindingContext.EditarCommand, Source={x:Reference PageRoot}}"
+                                        CommandParameter="{Binding}" />
 
-            </VerticalStackLayout>
-        </ScrollView>
-    </ContentPage.Content>
+                                    <Button 
+                                        Text="🗑️ Eliminar"
+                                        BackgroundColor="#F44336"
+                                        TextColor="White"
+                                        Command="{Binding BindingContext.EliminarCommand, Source={x:Reference PageRoot}}"
+                                        CommandParameter="{Binding}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

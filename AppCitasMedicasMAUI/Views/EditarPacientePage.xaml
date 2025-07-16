@@ -8,30 +8,38 @@
         <VerticalStackLayout Padding="20" Spacing="10">
 
             <Label Text="Nombres" />
-            <Entry x:Name="NombresEntry" Placeholder="Ingrese nombres" />
+            <Entry Text="{Binding Nombres}" Placeholder="Ingrese nombres" />
 
             <Label Text="Apellidos" />
-            <Entry x:Name="ApellidosEntry" Placeholder="Ingrese apellidos" />
+            <Entry Text="{Binding Apellidos}" Placeholder="Ingrese apellidos" />
 
             <Label Text="Cédula" />
-            <Entry x:Name="CedulaEntry" Placeholder="Ingrese cédula" />
+            <Entry Text="{Binding Cedula}" Placeholder="Ingrese cédula" />
 
             <Label Text="Edad" />
-            <Entry x:Name="EdadEntry" Keyboard="Numeric" Placeholder="Ingrese edad" />
+            <Entry Text="{Binding Edad}" Keyboard="Numeric" Placeholder="Ingrese edad" />
 
             <Label Text="Altura (cm)" />
-            <Entry x:Name="AlturaEntry" Keyboard="Numeric" Placeholder="Ingrese altura" />
+            <Entry Text="{Binding Altura}" Keyboard="Numeric" Placeholder="Ingrese altura" />
 
             <Label Text="Peso (kg)" />
-            <Entry x:Name="PesoEntry" Keyboard="Numeric" Placeholder="Ingrese peso" />
+            <Entry Text="{Binding Peso}" Keyboard="Numeric" Placeholder="Ingrese peso" />
 
             <Label Text="Dirección" />
-            <Entry x:Name="DireccionEntry" Placeholder="Ingrese dirección" />
+            <Entry Text="{Binding Direccion}" Placeholder="Ingrese dirección" />
 
             <Label Text="Teléfono" />
-            <Entry x:Name="TelefonoEntry" Placeholder="Ingrese teléfono" />
+            <Entry Text="{Binding Telefono}" Placeholder="Ingrese teléfono" />
 
-            <Button Text="Guardar Cambios" Clicked="OnGuardarClicked" BackgroundColor="#4CAF50" TextColor="White" />
+            <Button Text="Guardar Cambios"
+                    Command="{Binding GuardarCommand}"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White" />
+            <Button Text="Cancelar"
+                Command="{Binding CancelarCommand}"
+                BackgroundColor="#B0BEC5"
+                TextColor="Black" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

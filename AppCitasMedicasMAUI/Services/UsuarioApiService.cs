@@ -10,6 +10,7 @@ namespace AppCitasMedicasMAUI.Services
     {
         private readonly HttpClient _httpClient;
 
+        // Constructor recibe HttpClient ya configurado con BaseAddress
         public UsuarioApiService(HttpClient httpClient)
         {
             _httpClient = httpClient;

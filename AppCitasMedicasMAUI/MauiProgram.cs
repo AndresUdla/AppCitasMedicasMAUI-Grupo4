@@ -1,5 +1,7 @@
 ﻿using AppCitasMedicasMAUI.Data;
 using AppCitasMedicasMAUI.Services;
+using AppCitasMedicasMAUI.ViewModels;
+using AppCitasMedicasMAUI.Views;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
 
@@ -30,16 +32,46 @@ namespace AppCitasMedicasMAUI
                 return await AppDatabase.CreateAsync(dbPath);
             });
 
-            // Registro del HttpClient para API
-            builder.Services.AddHttpClient();
+            // Registro de HttpClient con BaseAddress para la API
+            builder.Services.AddHttpClient<UsuarioApiService>(client =>
+            {
+                client.BaseAddress = new Uri(AppCitasMedicasMAUI.Models.ApiConstants.BaseUrl);
+            });
 
-            // Registro de ApiServices como transient o singleton según prefieras
-            builder.Services.AddTransient<AdministradorApiService>();
-            builder.Services.AddTransient<UsuarioApiService>();
-            builder.Services.AddTransient<MedicoApiService>();
-            builder.Services.AddTransient<PacienteApiService>();
-            builder.Services.AddTransient<HorarioApiService>();
-            builder.Services.AddTransient<CitaApiService>();
+            builder.Services.AddHttpClient<PacienteApiService>(client =>
+            {
+                client.BaseAddress = new Uri(AppCitasMedicasMAUI.Models.ApiConstants.BaseUrl);
+            });
+
+            builder.Services.AddHttpClient<AdministradorApiService>(client =>
+            {
+                client.BaseAddress = new Uri(AppCitasMedicasMAUI.Models.ApiConstants.BaseUrl);
+            });
+
+            builder.Services.AddHttpClient<MedicoApiService>(client =>
+            {
+                client.BaseAddress = new Uri(AppCitasMedicasMAUI.Models.ApiConstants.BaseUrl);
+            });
+
+            builder.Services.AddHttpClient<HorarioApiService>(client =>
+            {
+                client.BaseAddress = new Uri(AppCitasMedicasMAUI.Models.ApiConstants.BaseUrl);
+            });
+
+            builder.Services.AddHttpClient<CitaApiService>(client =>
+            {
+                client.BaseAddress = new Uri(AppCitasMedicasMAUI.Models.ApiConstants.BaseUrl);
+            });
+
+            // Registro de ViewModels y Views
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<PacientesViewModel>();
+            builder.Services.AddTransient<PacientesPage>();
+            builder.Services.AddTransient<CrearPacientePage>();
+            builder.Services.AddTransient<CrearPacienteViewModel>();
+            builder.Services.AddTransient<EditarPacientePage>();
+            builder.Services.AddTransient<EditarPacienteViewModel>();
 
             return builder.Build();
         }

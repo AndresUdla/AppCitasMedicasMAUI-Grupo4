@@ -13,7 +13,16 @@
         ContentTemplate="{DataTemplate views:LoginPage}"
         Route="LoginPage" />
 
-    <!-- Navegación por pestañas -->
+    <!-- Páginas no visibles en el menú, solo para navegación -->
+    <ShellContent
+        Route="CrearPacientePage"
+        ContentTemplate="{DataTemplate views:CrearPacientePage}" />
+
+    <ShellContent
+        Route="EditarPacientePage"
+        ContentTemplate="{DataTemplate views:EditarPacientePage}" />
+
+    <!-- Navegación por pestañas para Admin -->
     <TabBar Route="AdminTabs">
         <ShellContent
             Title="🧑‍💻 Usuarios"

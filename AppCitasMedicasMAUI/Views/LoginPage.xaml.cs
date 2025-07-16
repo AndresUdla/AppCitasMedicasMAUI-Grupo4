@@ -1,10 +1,13 @@
-﻿namespace AppCitasMedicasMAUI.Views
+﻿using AppCitasMedicasMAUI.ViewModels;
+
+namespace AppCitasMedicasMAUI.Views
 {
     public partial class LoginPage : ContentPage
     {
-        public LoginPage()
+        public LoginPage(LoginViewModel viewModel)
         {
             InitializeComponent();
+            BindingContext = viewModel;
         }
     }
 }
