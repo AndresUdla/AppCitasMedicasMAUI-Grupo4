@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppCitasMedicasMAUI.Views.CrearUsuarioPage"
+             Title="Crear Usuario">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Entry Placeholder="Correo"
+                   Text="{Binding Correo}" />
+
+            <Entry Placeholder="Contraseña"
+                   Text="{Binding Contrasena}"
+                   IsPassword="True" />
+
+            <Picker Title="Rol"
+                    ItemsSource="{Binding Roles}"
+                    SelectedItem="{Binding RolSeleccionado}" />
+
+            <Button Text="Crear"
+                    Command="{Binding CrearCommand}"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White" />
+
+            <Button Text="Cancelar"
+                    Command="{Binding CancelarCommand}"
+                    BackgroundColor="#9E9E9E"
+                    TextColor="White" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

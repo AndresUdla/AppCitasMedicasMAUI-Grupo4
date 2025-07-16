@@ -6,21 +6,41 @@
     xmlns:views="clr-namespace:AppCitasMedicasMAUI.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="AppCitasMedicasMAUI">
-
+    
     <!-- Página inicial (Login) -->
     <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate views:LoginPage}"
-        Route="LoginPage" />
+    Title="Login"
+    ContentTemplate="{DataTemplate views:LoginPage}"
+    Route="LoginPage" />
 
     <!-- Páginas no visibles en el menú, solo para navegación -->
+    <!-- Páginas invisibles del módulo de pacientes -->
     <ShellContent
-        Route="CrearPacientePage"
-        ContentTemplate="{DataTemplate views:CrearPacientePage}" />
+    Route="CrearPacientePage"
+    ContentTemplate="{DataTemplate views:CrearPacientePage}" />
 
     <ShellContent
-        Route="EditarPacientePage"
-        ContentTemplate="{DataTemplate views:EditarPacientePage}" />
+    Route="EditarPacientePage"
+    ContentTemplate="{DataTemplate views:EditarPacientePage}" />
+
+    <!-- Páginas invisibles del módulo de usuarios -->
+    <ShellContent
+    Route="CrearUsuarioPage"
+    ContentTemplate="{DataTemplate views:CrearUsuarioPage}" />
+
+    <ShellContent
+    Route="EditarUsuarioPage"
+    ContentTemplate="{DataTemplate views:EditarUsuarioPage}" />
+
+    <!-- Páginas invisibles del módulo de médicos -->
+    <ShellContent
+    Route="CrearMedicoPage"
+    ContentTemplate="{DataTemplate views:CrearMedicoPage}" />
+
+    <ShellContent
+    Route="EditarMedicoPage"
+    ContentTemplate="{DataTemplate views:EditarMedicoPage}" />
+
 
     <!-- Navegación por pestañas para Admin -->
     <TabBar Route="AdminTabs">

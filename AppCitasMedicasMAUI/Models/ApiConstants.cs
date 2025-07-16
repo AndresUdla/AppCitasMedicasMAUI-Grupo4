@@ -13,15 +13,15 @@ namespace AppCitasMedicasMAUI.Models
             get
             {
 #if ANDROID
-
-                return "http://10.0.2.2:5222/";
+            return "http://10.0.2.2:5222/";
 #elif WINDOWS
-                return "https://localhost:7062/";
+            return "http://localhost:5222/";
 #else
-                return "https://localhost:7062/";
+                return "http://localhost:5222/";
 #endif
             }
         }
     }
+
 }
 
