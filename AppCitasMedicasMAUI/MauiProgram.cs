@@ -80,6 +80,12 @@ namespace AppCitasMedicasMAUI
             builder.Services.AddTransient<CrearUsuarioViewModel>();
             builder.Services.AddTransient<EditarUsuarioPage>();
             builder.Services.AddTransient<EditarUsuarioViewModel>();
+            builder.Services.AddTransient<MedicosViewModel>();
+            builder.Services.AddTransient<MedicosPage>();
+            builder.Services.AddTransient<CrearMedicoPage>();
+            builder.Services.AddTransient<CrearMedicoViewModel>();
+            builder.Services.AddTransient<EditarMedicoPage>();
+            builder.Services.AddTransient<EditarMedicoViewModel>();
 
 
 

@@ -1,9 +1,27 @@
-namespace AppCitasMedicasMAUI.Views;
+using AppCitasMedicasMAUI.Services;
+using AppCitasMedicasMAUI.ViewModels;
 
-public partial class MedicosPage : ContentPage
+namespace AppCitasMedicasMAUI.Views
 {
-	public MedicosPage()
-	{
-		InitializeComponent();
-	}
+    public partial class MedicosPage : ContentPage
+    {
+        private MedicosViewModel _viewModel;
+
+        public MedicosPage()
+        {
+            InitializeComponent();
+
+            var medicoService = App.Current.Handler.MauiContext.Services.GetService<MedicoApiService>();
+            var logService = App.Current.Handler.MauiContext.Services.GetService<LogService>();
+
+            _viewModel = new MedicosViewModel(medicoService, logService);
+            BindingContext = _viewModel;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await _viewModel.CargarMedicosAsync();
+        }
+    }
 }

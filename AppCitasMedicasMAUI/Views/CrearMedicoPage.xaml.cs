@@ -1,9 +1,18 @@
-namespace AppCitasMedicasMAUI.Views;
+using AppCitasMedicasMAUI.Services;
+using AppCitasMedicasMAUI.ViewModels;
 
-public partial class CrearMedicoPage : ContentPage
+namespace AppCitasMedicasMAUI.Views
 {
-	public CrearMedicoPage()
-	{
-		InitializeComponent();
-	}
+    public partial class CrearMedicoPage : ContentPage
+    {
+        public CrearMedicoPage()
+        {
+            InitializeComponent();
+
+            var medicoService = App.Current.Handler.MauiContext.Services.GetService<MedicoApiService>();
+            var logService = App.Current.Handler.MauiContext.Services.GetService<LogService>();
+
+            BindingContext = new CrearMedicoViewModel(medicoService, logService);
+        }
+    }
 }
