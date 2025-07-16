@@ -90,6 +90,8 @@ namespace AppCitasMedicasMAUI
             builder.Services.AddTransient<HorariosMedicoPage>();
             builder.Services.AddTransient<CrearHorarioPage>();
             builder.Services.AddTransient<CrearHorarioViewModel>();
+            builder.Services.AddTransient<EditarHorarioPage>();
+            builder.Services.AddTransient<EditarHorarioViewModel>();
 
 
 
