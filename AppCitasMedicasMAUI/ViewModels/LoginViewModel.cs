@@ -8,10 +8,13 @@ namespace AppCitasMedicasMAUI.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         private readonly UsuarioApiService _usuarioApiService;
+        private readonly LogService _logService;
 
-        public LoginViewModel(UsuarioApiService usuarioApiService)
+        public LoginViewModel(UsuarioApiService usuarioApiService, LogService logService)
         {
             _usuarioApiService = usuarioApiService;
+            _logService = logService;
+
             LoginCommand = new Command(async () => await LoginAsync(), () => !IsBusy);
         }
 
@@ -57,24 +60,24 @@ namespace AppCitasMedicasMAUI.ViewModels
             ((Command)LoginCommand).ChangeCanExecute();
             MensajeError = string.Empty;
 
-            Debug.WriteLine($"Intentando login con {Correo}");
-
             try
             {
                 var usuario = await _usuarioApiService.LoginAsync(Correo, Contrasena);
                 if (usuario != null)
                 {
-                    Debug.WriteLine($"Login exitoso para {usuario.Correo}, navegando...");
-                    await Shell.Current.GoToAsync("//AdminTabs");  
+                    await _logService.RegistrarAccionAsync($"Inicio de sesión exitoso: {usuario.Correo}");
+                    await Shell.Current.GoToAsync("//AdminTabs");
                 }
                 else
                 {
                     MensajeError = "Correo o contraseña incorrectos.";
+                    await _logService.RegistrarAccionAsync($"Intento fallido de inicio de sesión con: {Correo}");
                 }
             }
             catch (Exception ex)
             {
                 MensajeError = $"Error al iniciar sesión: {ex.Message}";
+                await _logService.RegistrarAccionAsync($"Error inesperado al iniciar sesión con: {Correo} - {ex.Message}");
             }
             finally
             {

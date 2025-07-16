@@ -31,6 +31,8 @@ namespace AppCitasMedicasMAUI
                 var dbPath = Path.Combine(FileSystem.AppDataDirectory, "citasmedicas.db3");
                 return await AppDatabase.CreateAsync(dbPath);
             });
+            builder.Services.AddSingleton<LogService>();
+
 
             // Registro de HttpClient con BaseAddress para la API
             builder.Services.AddHttpClient<UsuarioApiService>(client =>

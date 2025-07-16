@@ -11,11 +11,14 @@ namespace AppCitasMedicasMAUI.Views
         {
             InitializeComponent();
 
-            // Obtener servicios e inicializar ViewModel
-            var pacienteService = App.Current.Handler.MauiContext.Services.GetService<PacienteApiService>();
-            var usuarioService = App.Current.Handler.MauiContext.Services.GetService<UsuarioApiService>();
+            // Obtener los servicios necesarios
+            var context = App.Current.Handler.MauiContext.Services;
 
-            _viewModel = new PacientesViewModel(pacienteService, usuarioService);
+            var pacienteService = context.GetService<PacienteApiService>();
+            var usuarioService = context.GetService<UsuarioApiService>();
+            var logService = context.GetService<LogService>(); 
+
+            _viewModel = new PacientesViewModel(pacienteService, usuarioService, logService);
             BindingContext = _viewModel;
         }
 
