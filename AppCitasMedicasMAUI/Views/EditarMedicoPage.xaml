@@ -2,21 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppCitasMedicasMAUI.Views.EditarMedicoPage"
-             Title="Editar Médico">
+             Title="Editar Médico"
+             x:Name="EditarMedicoPageRef">
 
     <ScrollView>
-        <StackLayout Padding="10" Spacing="10">
-            <Entry Placeholder="Nombre" Text="{Binding Nombre}" />
-            <Entry Placeholder="Especialidad" Text="{Binding Especialidad}" />
-            <Entry Placeholder="Teléfono" Text="{Binding Telefono}" Keyboard="Telephone" />
-            <Entry Placeholder="Ubicación del consultorio" Text="{Binding UbicacionConsultorio}" />
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="Nombre:" />
+            <Entry Text="{Binding Nombre}" Placeholder="Ingrese el nombre" />
+
+            <Label Text="Especialidad:" />
+            <Entry Text="{Binding Especialidad}" Placeholder="Ingrese la especialidad" />
+
+            <Label Text="Teléfono:" />
+            <Entry Text="{Binding Telefono}" Placeholder="Ingrese el teléfono" />
+
+            <Label Text="Ubicación del Consultorio:" />
+            <Entry Text="{Binding UbicacionConsultorio}" Placeholder="Ingrese la ubicación" />
 
             <Button Text="Guardar Cambios"
                     Command="{Binding GuardarCommand}"
-                    BackgroundColor="#FF9800"
+                    BackgroundColor="#4CAF50"
                     TextColor="White" />
 
-            <Label Text="{Binding MensajeError}" TextColor="Red" IsVisible="{Binding IsErrorVisible}" />
-        </StackLayout>
+            <Button Text="Cancelar"
+                    Command="{Binding CancelarCommand}"
+                    BackgroundColor="#B0BEC5"
+                    TextColor="Black" />
+
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

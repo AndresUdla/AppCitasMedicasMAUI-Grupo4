@@ -1,120 +1,68 @@
 ﻿using AppCitasMedicasMAUI.Models;
 using AppCitasMedicasMAUI.Services;
+using AppCitasMedicasMAUI.ViewModels;
 using System.Windows.Input;
 
-namespace AppCitasMedicasMAUI.ViewModels
+public class EditarMedicoViewModel : BaseViewModel
 {
-    [QueryProperty(nameof(Medico), "Medico")]
-    public class EditarMedicoViewModel : BaseViewModel
+    private readonly MedicoApiService _medicoService;
+    private readonly LogService _logService;
+
+    private Medico _medicoOriginal;
+
+    public ICommand GuardarCommand { get; }
+    public ICommand CancelarCommand { get; }
+
+    public EditarMedicoViewModel(MedicoApiService medicoService, LogService logService)
     {
-        private readonly MedicoApiService _medicoService;
-        private readonly LogService _logService;
+        _medicoService = medicoService;
+        _logService = logService;
 
-        private Medico _medico;
+        GuardarCommand = new Command(async () => await GuardarCambiosAsync());
+        CancelarCommand = new Command(async () => await Shell.Current.GoToAsync("//MedicosPage"));
+    }
 
-        public Medico Medico
+    // Propiedades editables
+    public string Nombre { get; set; }
+    public string Especialidad { get; set; }
+    public string Telefono { get; set; }
+    public string UbicacionConsultorio { get; set; }
+
+    public void Inicializar(Medico medico)
+    {
+        _medicoOriginal = medico;
+
+        Nombre = medico.Nombre;
+        Especialidad = medico.Especialidad;
+        Telefono = medico.Telefono;
+        UbicacionConsultorio = medico.UbicacionConsultorio;
+
+        OnPropertyChanged(nameof(Nombre));
+        OnPropertyChanged(nameof(Especialidad));
+        OnPropertyChanged(nameof(Telefono));
+        OnPropertyChanged(nameof(UbicacionConsultorio));
+    }
+
+    private async Task GuardarCambiosAsync()
+    {
+        if (_medicoOriginal == null) return;
+
+        _medicoOriginal.Nombre = Nombre;
+        _medicoOriginal.Especialidad = Especialidad;
+        _medicoOriginal.Telefono = Telefono;
+        _medicoOriginal.UbicacionConsultorio = UbicacionConsultorio;
+
+        var exito = await _medicoService.UpdateAsync(_medicoOriginal.MedicoId, _medicoOriginal);
+
+        if (exito)
         {
-            get => _medico;
-            set
-            {
-                _medico = value;
-                OnPropertyChanged(nameof(Nombre));
-                OnPropertyChanged(nameof(Especialidad));
-                OnPropertyChanged(nameof(Telefono));
-                OnPropertyChanged(nameof(UbicacionConsultorio));
-            }
+            await Shell.Current.DisplayAlert("Éxito", "Médico actualizado correctamente.", "OK");
+            await _logService.RegistrarAccionAsync($"Editó médico: {Nombre}");
+            await Shell.Current.GoToAsync("//MedicosPage");
         }
-
-        public string Nombre
+        else
         {
-            get => Medico?.Nombre;
-            set
-            {
-                if (Medico != null)
-                {
-                    Medico.Nombre = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string Especialidad
-        {
-            get => Medico?.Especialidad;
-            set
-            {
-                if (Medico != null)
-                {
-                    Medico.Especialidad = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string Telefono
-        {
-            get => Medico?.Telefono;
-            set
-            {
-                if (Medico != null)
-                {
-                    Medico.Telefono = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string UbicacionConsultorio
-        {
-            get => Medico?.UbicacionConsultorio;
-            set
-            {
-                if (Medico != null)
-                {
-                    Medico.UbicacionConsultorio = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public ICommand GuardarCommand { get; }
-
-        public EditarMedicoViewModel(MedicoApiService medicoService, LogService logService)
-        {
-            _medicoService = medicoService;
-            _logService = logService;
-            GuardarCommand = new Command(async () => await GuardarAsync());
-        }
-
-        private async Task GuardarAsync()
-        {
-            if (IsBusy || Medico == null) return;
-            IsBusy = true;
-            MensajeError = string.Empty;
-
-            try
-            {
-                bool resultado = await _medicoService.UpdateAsync(Medico.MedicoId, Medico);
-
-                if (resultado)
-                {
-                    await _logService.RegistrarAccionAsync($"Editó médico: {Medico.Nombre}");
-                    await Shell.Current.DisplayAlert("Éxito", "Médico actualizado correctamente.", "OK");
-                    await Shell.Current.GoToAsync("..");
-                }
-                else
-                {
-                    MensajeError = "No se pudo actualizar el médico.";
-                }
-            }
-            catch (Exception ex)
-            {
-                MensajeError = $"Error: {ex.Message}";
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            await Shell.Current.DisplayAlert("Error", "No se pudo actualizar el médico.", "OK");
         }
     }
 }

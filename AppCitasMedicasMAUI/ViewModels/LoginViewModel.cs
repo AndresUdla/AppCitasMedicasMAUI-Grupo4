@@ -2,6 +2,7 @@
 using AppCitasMedicasMAUI.Services;
 using System.Windows.Input;
 using System.Diagnostics;
+using Microsoft.Maui.Storage; 
 
 namespace AppCitasMedicasMAUI.ViewModels
 {
@@ -65,8 +66,31 @@ namespace AppCitasMedicasMAUI.ViewModels
                 var usuario = await _usuarioApiService.LoginAsync(Correo, Contrasena);
                 if (usuario != null)
                 {
+                    // Guardar ID y Rol en Preferences
+                    Preferences.Set("UsuarioId", usuario.UsuarioId);
+                    Preferences.Set("RolUsuario", usuario.Rol.ToString());
+
                     await _logService.RegistrarAccionAsync($"Inicio de sesión exitoso: {usuario.Correo}");
-                    await Shell.Current.GoToAsync("//AdminTabs");
+
+                    // Navegar según el rol del usuario
+                    switch (usuario.Rol)
+                    {
+                        case RolUsuario.Administrador:
+                            await Shell.Current.GoToAsync("//AdminTabs");
+                            break;
+
+                        case RolUsuario.Medico:
+                            await Shell.Current.GoToAsync("//MedicoTabs");
+                            break;
+
+                        case RolUsuario.Paciente:
+                            await Shell.Current.GoToAsync("//PacienteTabs"); // <-- si más adelante creas este
+                            break;
+
+                        default:
+                            MensajeError = "Rol no reconocido.";
+                            break;
+                    }
                 }
                 else
                 {

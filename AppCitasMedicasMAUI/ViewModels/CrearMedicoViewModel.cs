@@ -1,66 +1,87 @@
 ﻿using AppCitasMedicasMAUI.Models;
 using AppCitasMedicasMAUI.Services;
+using AppCitasMedicasMAUI.ViewModels;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace AppCitasMedicasMAUI.ViewModels
+public class CrearMedicoViewModel : BaseViewModel
 {
-    public class CrearMedicoViewModel : BaseViewModel
+    private readonly MedicoApiService _medicoService;
+    private readonly UsuarioApiService _usuarioService;
+    private readonly LogService _logService;
+
+    public ObservableCollection<Usuario> UsuariosMedico { get; } = new();
+
+    public ICommand CrearCommand { get; }
+    public ICommand CancelarCommand { get; }
+
+    private Usuario _usuarioSeleccionado;
+    public Usuario UsuarioSeleccionado
     {
-        private readonly MedicoApiService _medicoService;
-        private readonly LogService _logService;
+        get => _usuarioSeleccionado;
+        set => SetProperty(ref _usuarioSeleccionado, value);
+    }
 
-        public string Nombre { get; set; }
-        public string Especialidad { get; set; }
-        public string Telefono { get; set; }
-        public string UbicacionConsultorio { get; set; }
+    public string Nombre { get; set; }
+    public string Especialidad { get; set; }
+    public string Telefono { get; set; }
+    public string UbicacionConsultorio { get; set; }
 
-        public ICommand GuardarCommand { get; }
+    public CrearMedicoViewModel(MedicoApiService medicoService, UsuarioApiService usuarioService, LogService logService)
+    {
+        _medicoService = medicoService;
+        _usuarioService = usuarioService;
+        _logService = logService;
 
-        public CrearMedicoViewModel(MedicoApiService medicoService, LogService logService)
+        CrearCommand = new Command(async () => await CrearMedicoAsync());
+        CancelarCommand = new Command(async () => await Shell.Current.GoToAsync("//MedicosPage"));
+    }
+
+    public async Task InicializarAsync()
+    {
+        try
         {
-            _medicoService = medicoService;
-            _logService = logService;
-            GuardarCommand = new Command(async () => await GuardarAsync());
+            var usuarios = await _usuarioService.GetAllAsync();
+            var medicos = usuarios.Where(u => u.Rol == RolUsuario.Medico);
+
+            UsuariosMedico.Clear();
+            foreach (var u in medicos)
+                UsuariosMedico.Add(u);
+        }
+        catch (Exception ex)
+        {
+            MensajeError = $"Error al cargar usuarios: {ex.Message}";
+        }
+    }
+
+    private async Task CrearMedicoAsync()
+    {
+        if (UsuarioSeleccionado == null)
+        {
+            await Shell.Current.DisplayAlert("Validación", "Seleccione un usuario.", "OK");
+            return;
         }
 
-        private async Task GuardarAsync()
+        var nuevo = new Medico
         {
-            if (IsBusy) return;
-            IsBusy = true;
-            MensajeError = string.Empty;
+            UsuarioId = UsuarioSeleccionado.UsuarioId,
+            Nombre = Nombre,
+            Especialidad = Especialidad,
+            Telefono = Telefono,
+            UbicacionConsultorio = UbicacionConsultorio
+        };
 
-            try
-            {
-                var nuevoMedico = new Medico
-                {
-                    Nombre = this.Nombre,
-                    Especialidad = this.Especialidad,
-                    Telefono = this.Telefono,
-                    UbicacionConsultorio = this.UbicacionConsultorio,
-                    UsuarioId = 1 // o el ID del usuario relacionado si se maneja
-                };
+        var exito = await _medicoService.CreateAsync(nuevo);
 
-                var resultado = await _medicoService.CreateAsync(nuevoMedico);
-
-                if (resultado != null)
-                {
-                    await _logService.RegistrarAccionAsync($"Creó médico: {resultado.Nombre}");
-                    await Shell.Current.DisplayAlert("Éxito", "Médico creado correctamente.", "OK");
-                    await Shell.Current.GoToAsync("..");
-                }
-                else
-                {
-                    MensajeError = "No se pudo crear el médico.";
-                }
-            }
-            catch (Exception ex)
-            {
-                MensajeError = $"Error: {ex.Message}";
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+        if (exito != null)
+        {
+            await Shell.Current.DisplayAlert("Éxito", "Médico creado.", "OK");
+            await _logService.RegistrarAccionAsync($"Creó médico: {nuevo.Nombre}");
+            await Shell.Current.GoToAsync("//MedicosPage");
+        }
+        else
+        {
+            await Shell.Current.DisplayAlert("Error", "No se pudo crear el médico.", "OK");
         }
     }
 }

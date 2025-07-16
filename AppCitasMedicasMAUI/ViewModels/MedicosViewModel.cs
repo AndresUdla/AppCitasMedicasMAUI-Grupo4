@@ -55,7 +55,7 @@ namespace AppCitasMedicasMAUI.ViewModels
             if (medico == null) return;
 
             bool confirmado = await Shell.Current.DisplayAlert(
-                "Confirmar", $"¿Eliminar al Dr. {medico.Nombre}?", "Sí", "No");
+                "Confirmar", $"¿Eliminar médico {medico.Nombre}?", "Sí", "No");
 
             if (!confirmado) return;
 

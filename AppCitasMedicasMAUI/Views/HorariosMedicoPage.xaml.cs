@@ -3,19 +3,19 @@ using AppCitasMedicasMAUI.ViewModels;
 
 namespace AppCitasMedicasMAUI.Views
 {
-    public partial class CrearMedicoPage : ContentPage
+    public partial class HorariosMedicoPage : ContentPage
     {
-        private CrearMedicoViewModel _viewModel;
+        private readonly HorariosMedicoViewModel _viewModel;
 
-        public CrearMedicoPage()
+        public HorariosMedicoPage()
         {
             InitializeComponent();
 
+            var horarioService = App.Current.Handler.MauiContext.Services.GetService<HorarioApiService>();
             var medicoService = App.Current.Handler.MauiContext.Services.GetService<MedicoApiService>();
-            var usuarioService = App.Current.Handler.MauiContext.Services.GetService<UsuarioApiService>();
             var logService = App.Current.Handler.MauiContext.Services.GetService<LogService>();
 
-            _viewModel = new CrearMedicoViewModel(medicoService, usuarioService, logService);
+            _viewModel = new HorariosMedicoViewModel(horarioService, medicoService, logService);
             BindingContext = _viewModel;
         }
 

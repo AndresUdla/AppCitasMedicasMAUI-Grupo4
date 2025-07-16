@@ -2,21 +2,37 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppCitasMedicasMAUI.Views.CrearMedicoPage"
-             Title="Nuevo Médico">
+             Title="Crear Médico">
 
     <ScrollView>
-        <StackLayout Padding="10" Spacing="10">
-            <Entry Placeholder="Nombre" Text="{Binding Nombre}" />
-            <Entry Placeholder="Especialidad" Text="{Binding Especialidad}" />
-            <Entry Placeholder="Teléfono" Text="{Binding Telefono}" Keyboard="Telephone" />
-            <Entry Placeholder="Ubicación del consultorio" Text="{Binding UbicacionConsultorio}" />
+        <VerticalStackLayout Padding="20" Spacing="15">
 
-            <Button Text="Guardar"
-                    Command="{Binding GuardarCommand}"
-                    BackgroundColor="#4CAF50"
+            <Label Text="Seleccionar Usuario Médico:" />
+            <Picker ItemsSource="{Binding UsuariosMedico}"
+                    ItemDisplayBinding="{Binding Correo}"
+                    SelectedItem="{Binding UsuarioSeleccionado}" />
+
+            <Label Text="Nombre:" />
+            <Entry Text="{Binding Nombre}" Placeholder="Ingrese nombre" />
+
+            <Label Text="Especialidad:" />
+            <Entry Text="{Binding Especialidad}" Placeholder="Ingrese especialidad" />
+
+            <Label Text="Teléfono:" />
+            <Entry Text="{Binding Telefono}" Keyboard="Telephone" Placeholder="Ingrese teléfono" />
+
+            <Label Text="Ubicación Consultorio:" />
+            <Entry Text="{Binding UbicacionConsultorio}" Placeholder="Ingrese ubicación (opcional)" />
+
+            <Button Text="Crear Médico"
+                    Command="{Binding CrearCommand}"
+                    BackgroundColor="#2C7EF0"
                     TextColor="White" />
+            <Button Text="Cancelar"
+                    Command="{Binding CancelarCommand}"
+                    BackgroundColor="#B0BEC5"
+                    TextColor="Black" />
 
-            <Label Text="{Binding MensajeError}" TextColor="Red" IsVisible="{Binding IsErrorVisible}" />
-        </StackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

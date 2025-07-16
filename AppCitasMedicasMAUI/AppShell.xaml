@@ -64,5 +64,25 @@
             ContentTemplate="{DataTemplate views:CitasPage}"
             Route="CitasPage" />
     </TabBar>
+    <ShellContent
+    Route="CrearHorarioPage"
+    ContentTemplate="{DataTemplate views:CrearHorarioPage}" />
+
+    <ShellContent
+    Route="EditarHorarioPage"
+    ContentTemplate="{DataTemplate views:EditarHorarioPage}" />
+
+    <TabBar Route="MedicoTabs">
+        <ShellContent
+            Title="📅 Mis Citas"
+            ContentTemplate="{DataTemplate views:CitasMedicoPage}"
+            Route="CitasMedicoPage" />
+
+        <ShellContent
+            Title="🕒 Horarios"
+            ContentTemplate="{DataTemplate views:HorariosMedicoPage}"
+            Route="HorariosMedicoPage" />
+    </TabBar>
+
 
 </Shell>

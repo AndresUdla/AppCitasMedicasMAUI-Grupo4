@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AppCitasMedicasMAUI.ViewModels"
+    x:Class="AppCitasMedicasMAUI.Views.HorariosMedicoPage"
+    x:Name="page"
+    Title="Mis Horarios">
+
+    <StackLayout Padding="20" Spacing="15">
+        <Button Text="➕ Agregar Horario"
+                Command="{Binding CrearCommand}"
+                BackgroundColor="#2E7D32"
+                TextColor="White" />
+
+        <CollectionView ItemsSource="{Binding Horarios}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="#ccc" CornerRadius="10" Padding="10" Margin="5">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Dia}" FontAttributes="Bold" FontSize="18"/>
+                            <Label Text="{Binding HoraInicio}" />
+                            <Label Text="{Binding HoraFin}" />
+                            <HorizontalStackLayout Spacing="10">
+                                <Button Text="✏️" Command="{Binding BindingContext.EditarCommand, Source={x:Reference page}}"
+                                        CommandParameter="{Binding}" />
+                                <Button Text="🗑️" Command="{Binding BindingContext.EliminarCommand, Source={x:Reference page}}"
+                                        CommandParameter="{Binding}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </StackLayout>
+</ContentPage>
